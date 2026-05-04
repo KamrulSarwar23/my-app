@@ -1,0 +1,63 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+
+type Props = {
+  value: string;
+  duration?: number;
+  className?: string;
+};
+
+export default function AnimatedCounter({
+  value,
+  duration = 1400,
+  className,
+}: Props) {
+  const match = value.match(/^(\d+)(.*)$/);
+  const targetNumber = match ? parseInt(match[1], 10) : NaN;
+  const suffix = match ? match[2] : "";
+
+  const ref = useRef<HTMLSpanElement>(null);
+  const [count, setCount] = useState(0);
+  const startedRef = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || isNaN(targetNumber)) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !startedRef.current) {
+            startedRef.current = true;
+            const start = performance.now();
+            const tick = (now: number) => {
+              const elapsed = now - start;
+              const progress = Math.min(elapsed / duration, 1);
+              const eased = 1 - Math.pow(1 - progress, 3);
+              setCount(Math.round(eased * targetNumber));
+              if (progress < 1) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [duration, targetNumber]);
+
+  if (isNaN(targetNumber)) {
+    return <span className={className}>{value}</span>;
+  }
+
+  return (
+    <span ref={ref} className={className}>
+      {count}
+      {suffix}
+    </span>
+  );
+}
