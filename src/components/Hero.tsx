@@ -128,7 +128,7 @@ export default function Hero() {
           <div className="relative animate-float">
             {/* Soft animated gradient halo */}
             <div
-              className="absolute -inset-6 sm:-inset-8 rounded-[3rem] bg-gradient-to-tr from-blue-500/25 via-purple-500/25 to-pink-500/25 blur-3xl opacity-70 dark:opacity-80 animate-gradient-shift -z-10"
+              className="absolute -inset-6 sm:-inset-8 rounded-[3rem] brand-gradient-soft blur-3xl opacity-80 animate-gradient-shift -z-10"
               aria-hidden="true"
             />
 
@@ -139,14 +139,14 @@ export default function Hero() {
             />
 
             {/* Photo frame: portrait 4:5 with refined gradient border */}
-            <div className="relative w-60 sm:w-72 lg:w-[20rem] aspect-[4/5] rounded-[2rem] p-[2px] bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 shadow-2xl shadow-purple-500/20 dark:shadow-purple-500/10">
+            <div className="relative w-44 sm:w-52 lg:w-60 aspect-[4/5] rounded-[2rem] p-[2px] brand-gradient-br brand-shadow">
               <div className="relative h-full w-full rounded-[1.9rem] bg-card overflow-hidden">
                 <Image
                   src="/Kamrul_Hasan.jpg"
                   alt={t.hero.name}
                   fill
                   priority
-                  sizes="(max-width: 640px) 15rem, (max-width: 1024px) 18rem, 20rem"
+                  sizes="(max-width: 640px) 11rem, (max-width: 1024px) 13rem, 15rem"
                   className="object-cover transition-transform duration-700 hover:scale-105"
                 />
 
@@ -189,7 +189,7 @@ export default function Hero() {
               style={{ animationDelay: "0s" }}
             >
               <div className="flex items-center gap-2.5">
-                <div className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-500 to-purple-500 text-white">
+                <div className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-xl brand-gradient-tr text-white">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -221,7 +221,7 @@ export default function Hero() {
               style={{ animationDelay: "1.4s" }}
             >
               <div className="flex items-center gap-2.5">
-                <div className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-500 text-white">
+                <div className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-xl brand-gradient-tr text-white">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -301,7 +301,7 @@ function TechMarquee() {
             key={`${tech}-${i}`}
             className="mx-6 flex items-center gap-2 text-sm text-muted whitespace-nowrap hover:text-foreground transition-colors"
           >
-            <span className="inline-block h-1.5 w-1.5 rounded-full bg-gradient-to-r from-blue-500 to-purple-500" />
+            <span className="inline-block h-1.5 w-1.5 rounded-full brand-gradient" />
             <span className="font-medium">{tech}</span>
           </div>
         ))}

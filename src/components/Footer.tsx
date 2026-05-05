@@ -85,7 +85,7 @@ export default function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-border bg-card/40">
       <div className="pointer-events-none absolute inset-0 -z-10 bg-grid opacity-30" />
-      <div className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 blur-3xl" />
+      <div className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 w-[600px] h-[300px] brand-glow blur-3xl" />
 
       <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 pt-14 sm:pt-16 pb-8">
         <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-12">
@@ -285,34 +285,12 @@ export default function Footer() {
         <div className="mt-12 h-px w-full bg-gradient-to-r from-transparent via-border to-transparent" />
 
         {/* Bottom bar */}
-        <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-muted">
+        <div className="mt-6 text-center text-sm text-muted">
           <p>
             © {new Date().getFullYear()}{" "}
             <span className="font-medium text-foreground">Kamrul Hasan</span>.{" "}
             {t.footer.rights}
           </p>
-          <a
-            href="#home"
-            className="group inline-flex items-center gap-1.5 hover:text-foreground transition-colors"
-          >
-            {t.footer.backToTop}
-            <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-border bg-card group-hover:border-foreground/30 group-hover:-translate-y-1 transition-all">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <line x1="12" y1="19" x2="12" y2="5" />
-                <polyline points="5 12 12 5 19 12" />
-              </svg>
-            </span>
-          </a>
         </div>
       </div>
     </footer>

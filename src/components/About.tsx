@@ -126,7 +126,7 @@ export default function About() {
                 {highlights.map((h, i) => (
                   <Reveal key={h.label} delay={i * 80}>
                     <div className="lift group h-full rounded-2xl border border-border bg-card p-3 sm:p-4">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-500 to-purple-500 text-white shadow-md transition-transform group-hover:scale-110">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-xl brand-gradient-tr text-white shadow-md transition-transform group-hover:scale-110">
                         {h.icon}
                       </div>
                       <div className="mt-2.5 text-xl sm:text-2xl font-bold leading-none">
@@ -147,7 +147,7 @@ export default function About() {
             <div className="relative rounded-3xl border border-border bg-card p-5 sm:p-7 shadow-sm overflow-hidden">
               {/* Soft inner glow */}
               <div
-                className="pointer-events-none absolute -top-20 -right-20 w-56 h-56 rounded-full bg-gradient-to-tr from-blue-500/10 to-purple-500/10 blur-3xl"
+                className="pointer-events-none absolute -top-20 -right-20 w-56 h-56 rounded-full brand-glow blur-3xl"
                 aria-hidden="true"
               />
 
@@ -162,8 +162,8 @@ export default function About() {
               </div>
 
               <ul className="relative mt-3 divide-y divide-border">
-                {rows.map((row, i) => (
-                  <Reveal key={row.key} delay={i * 60}>
+                {rows.map(({ key, ...row }, i) => (
+                  <Reveal key={key} delay={i * 60}>
                     <InfoRow {...row} />
                   </Reveal>
                 ))}
@@ -194,9 +194,7 @@ function InfoRow({
 
   const inner = (
     <div className="group flex items-center gap-3 sm:gap-4 py-3 -mx-2 px-2 rounded-xl hover:bg-foreground/[0.04] transition-colors">
-      <div
-        className={`shrink-0 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr ${accent} text-white shadow-sm transition-transform group-hover:scale-110`}
-      >
+      <div className="shrink-0 inline-flex h-10 w-10 items-center justify-center rounded-xl brand-gradient-tr text-white shadow-sm transition-transform group-hover:scale-110">
         {icon}
       </div>
       <div className="flex-1 min-w-0">
@@ -328,11 +326,11 @@ export function SectionHeading({
           isCenter ? "justify-center" : ""
         }`}
       >
-        <span className="h-px w-8 bg-gradient-to-r from-blue-500 to-purple-500" />
+        <span className="h-px w-8 brand-gradient" />
         <span className="text-xs uppercase tracking-[0.2em] font-medium text-muted">
           {eyebrow}
         </span>
-        <span className="h-px w-8 bg-gradient-to-r from-purple-500 to-pink-500" />
+        <span className="h-px w-8 brand-gradient" />
       </div>
       <h2 className="mt-4 text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
         {title}

@@ -162,12 +162,12 @@ export default function Services() {
               <div className="lift group relative h-full rounded-2xl border border-border bg-card p-6 hover:border-foreground/20 hover:shadow-xl overflow-hidden">
                 {/* Soft glow that follows hover */}
                 <div
-                  className={`absolute -top-12 -right-12 h-32 w-32 rounded-full bg-gradient-to-tr ${service.accent} opacity-0 blur-2xl group-hover:opacity-30 transition-opacity duration-500`}
+                  className="absolute -top-12 -right-12 h-32 w-32 rounded-full brand-gradient-tr opacity-0 blur-2xl group-hover:opacity-30 transition-opacity duration-500"
                   aria-hidden="true"
                 />
 
                 <div
-                  className={`relative inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-tr ${service.accent} text-white shadow-md transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6`}
+                  className="relative inline-flex h-11 w-11 items-center justify-center rounded-xl brand-gradient-tr text-white shadow-md transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6"
                 >
                   {service.icon}
                 </div>
@@ -177,9 +177,7 @@ export default function Services() {
                 </p>
 
                 {/* Bottom indicator on hover */}
-                <div
-                  className={`mt-5 h-px w-0 bg-gradient-to-r ${service.accent} transition-all duration-500 group-hover:w-full`}
-                />
+                <div className="mt-5 h-px w-0 brand-gradient transition-all duration-500 group-hover:w-full" />
               </div>
             </Reveal>
           ))}

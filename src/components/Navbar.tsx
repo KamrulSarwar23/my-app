@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import ThemeToggle from "./ThemeToggle";
 import LanguageSwitcher from "./LanguageSwitcher";
+import ColorPaletteSwitcher from "./ColorPaletteSwitcher";
 import { useT } from "@/i18n/LanguageProvider";
 
 const sectionIds = [
@@ -88,7 +89,7 @@ export default function Navbar() {
                 >
                   {link.label}
                   {isActive && (
-                    <span className="absolute left-3 right-3 -bottom-0.5 h-0.5 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
+                    <span className="absolute left-3 right-3 -bottom-0.5 h-0.5 rounded-full brand-gradient" />
                   )}
                 </a>
               </li>
@@ -98,6 +99,7 @@ export default function Navbar() {
 
         <div className="hidden lg:flex items-center gap-2">
           <LanguageSwitcher />
+          <ColorPaletteSwitcher />
           <ThemeToggle />
           <a
             href="/Kamrul_Hasan_Resume.pdf"
@@ -131,6 +133,7 @@ export default function Navbar() {
 
         <div className="flex lg:hidden items-center gap-2">
           <LanguageSwitcher />
+          <ColorPaletteSwitcher />
           <ThemeToggle />
           <button
             aria-label={t.nav.toggleMenu}

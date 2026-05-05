@@ -94,9 +94,7 @@ export default function Projects() {
           {projects.map((project, i) => (
             <Reveal key={project.key} delay={i * 80}>
               <article className="lift group relative h-full flex flex-col rounded-2xl border border-border bg-card overflow-hidden hover:shadow-2xl hover:border-foreground/20">
-                <div
-                  className={`relative h-36 bg-gradient-to-tr ${project.accent} overflow-hidden`}
-                >
+                <div className="relative h-36 brand-gradient-tr overflow-hidden">
                   <div
                     className="absolute inset-0 opacity-25 transition-transform duration-700 group-hover:scale-110"
                     style={{
