@@ -414,6 +414,28 @@ html[lang="bn"] body {
   transform-origin: left;
 }
 
+/* ---------- Form field autofill (keep theme colors in dark mode) ---------- */
+.form-field:-webkit-autofill,
+.form-field:-webkit-autofill:hover,
+.form-field:-webkit-autofill:focus,
+.form-field:-webkit-autofill:active {
+  -webkit-text-fill-color: var(--foreground);
+  -webkit-box-shadow: 0 0 0 1000px var(--card) inset;
+  caret-color: var(--foreground);
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Stronger border so inputs are clearly outlined on dark backgrounds */
+.dark .form-field {
+  border-color: rgba(255, 255, 255, 0.14);
+}
+.dark .form-field:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+}
+.dark .form-field:focus {
+  border-color: rgba(255, 255, 255, 0.32);
+}
+
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   *,

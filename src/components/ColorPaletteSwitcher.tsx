@@ -18,12 +18,12 @@ const palettes: Palette[] = [
 
 export default function ColorPaletteSwitcher() {
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState<string>("default");
+  const [active, setActive] = useState<string>("forest");
   const wrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const stored = document.documentElement.getAttribute("data-palette");
-    setActive(stored || "default");
+    setActive(stored || "forest");
   }, []);
 
   useEffect(() => {

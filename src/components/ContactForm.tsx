@@ -131,7 +131,7 @@ export default function ContactForm() {
             required
             disabled={isSubmitting}
             placeholder="Tell me about your project, timeline, and what you'd like to build…"
-            className="w-full rounded-xl border border-border bg-background/60 backdrop-blur px-4 py-3 text-sm leading-relaxed outline-none focus:border-foreground/30 focus:ring-2 focus:ring-foreground/10 transition resize-y disabled:opacity-60"
+            className="form-field w-full rounded-xl border border-border bg-background/60 backdrop-blur px-4 py-3 text-sm leading-relaxed text-foreground placeholder:text-muted outline-none focus:border-foreground/30 focus:ring-2 focus:ring-foreground/10 transition resize-y disabled:opacity-60"
           />
         </div>
 
@@ -208,7 +208,7 @@ function Field({
         required={required}
         autoComplete={autoComplete}
         disabled={disabled}
-        className="w-full rounded-xl border border-border bg-background/60 backdrop-blur px-4 py-2.5 text-sm outline-none focus:border-foreground/30 focus:ring-2 focus:ring-foreground/10 transition disabled:opacity-60"
+        className="form-field w-full rounded-xl border border-border bg-background/60 backdrop-blur px-4 py-2.5 text-sm text-foreground placeholder:text-muted outline-none focus:border-foreground/30 focus:ring-2 focus:ring-foreground/10 transition disabled:opacity-60"
       />
     </div>
   );

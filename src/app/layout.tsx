@@ -109,20 +109,18 @@ const initScript = `
 (function() {
   try {
     var stored = localStorage.getItem('theme');
-    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    var theme = stored || (prefersDark ? 'dark' : 'light');
+    var theme = stored === 'light' || stored === 'dark' ? stored : 'dark';
     if (theme === 'dark') document.documentElement.classList.add('dark');
     document.documentElement.style.colorScheme = theme;
 
     var locale = localStorage.getItem('locale');
-    if (locale === 'bn' || locale === 'en') {
-      document.documentElement.lang = locale;
-    }
+    document.documentElement.lang = locale === 'bn' ? 'bn' : 'en';
 
     var palette = localStorage.getItem('palette');
     var allowed = ['default', 'ocean', 'sunset', 'forest', 'royal'];
-    if (palette && allowed.indexOf(palette) !== -1 && palette !== 'default') {
-      document.documentElement.setAttribute('data-palette', palette);
+    var resolvedPalette = palette && allowed.indexOf(palette) !== -1 ? palette : 'forest';
+    if (resolvedPalette !== 'default') {
+      document.documentElement.setAttribute('data-palette', resolvedPalette);
     }
   } catch (e) {}
 })();
@@ -174,7 +172,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-background text-foreground">
+      <body
+        className="min-h-full flex flex-col bg-background text-foreground"
+        suppressHydrationWarning
+      >
         <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
