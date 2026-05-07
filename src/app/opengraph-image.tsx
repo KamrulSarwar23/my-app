@@ -93,7 +93,7 @@ export default async function OpenGraphImage() {
           }}
         >
           <div style={{ display: "flex", gap: 28 }}>
-            <span>kh4035209@gmail.com</span>
+            <span>kamrulsarwar99@gmail.com</span>
             <span>·</span>
             <span>github.com/KamrulSarwar23</span>
           </div>

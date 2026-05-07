@@ -6,6 +6,36 @@ import Reveal from "./Reveal";
 
 const GH_USER = "KamrulSarwar23";
 
+type GhData = {
+  user: {
+    login: string;
+    name: string | null;
+    avatar_url: string;
+    bio: string | null;
+    public_repos: number;
+    followers: number;
+    following: number;
+  };
+  stats: { totalStars: number; totalForks: number; ownRepos: number };
+  languages: { name: string; pct: number }[];
+};
+
+const LANG_COLORS: Record<string, string> = {
+  JavaScript: "#f1e05a",
+  TypeScript: "#3178c6",
+  PHP: "#4F5D95",
+  HTML: "#e34c26",
+  CSS: "#563d7c",
+  SCSS: "#c6538c",
+  Vue: "#41b883",
+  Blade: "#f7523f",
+  Python: "#3572A5",
+  Shell: "#89e051",
+  Dockerfile: "#384d54",
+};
+
+const langColor = (name: string) => LANG_COLORS[name] ?? "#8b5cf6";
+
 // Convert any CSS color string ("#06b6d4", "rgb(6,182,212)", " #06b6d4 ")
 // to a URL-safe 6-digit hex (no leading #).
 function toHex(input: string, fallback: string): string {
@@ -53,6 +83,25 @@ export default function GitHubStats() {
     to: "ec4899",
   });
   const [activityLoaded, setActivityLoaded] = useState(false);
+  const [data, setData] = useState<GhData | null>(null);
+  const [dataError, setDataError] = useState<boolean>(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/github")
+      .then(async (r) => (r.ok ? ((await r.json()) as GhData) : null))
+      .then((d) => {
+        if (cancelled) return;
+        if (d) setData(d);
+        else setDataError(true);
+      })
+      .catch(() => {
+        if (!cancelled) setDataError(true);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     const sync = () => {
@@ -72,8 +121,6 @@ export default function GitHubStats() {
   const cacheKey = `${isDark ? "d" : "l"}-${brand.from}-${brand.to}`;
   const theme = isDark ? "github_dark" : "default";
 
-  const statsUrl = `https://github-readme-stats.vercel.app/api?username=${GH_USER}&show_icons=true&hide_border=true&include_all_commits=true&count_private=true&theme=${theme}&v=${cacheKey}`;
-  const langsUrl = `https://github-readme-stats.vercel.app/api/top-langs/?username=${GH_USER}&layout=compact&hide_border=true&theme=${theme}&v=${cacheKey}`;
   const streakUrl = `https://github-readme-streak-stats.herokuapp.com/?user=${GH_USER}&hide_border=true&theme=${theme}&v=${cacheKey}`;
 
   // Activity graph — fully palette-driven.
@@ -160,25 +207,13 @@ export default function GitHubStats() {
         <div className="mt-10 grid gap-5 lg:grid-cols-3">
           <Reveal direction="left" delay={120}>
             <StatsCard title="Profile stats">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={statsUrl}
-                alt={`${GH_USER} GitHub stats`}
-                loading="lazy"
-                className="w-full h-auto"
-              />
+              <ProfileStats data={data} error={dataError} />
             </StatsCard>
           </Reveal>
 
           <Reveal delay={180}>
             <StatsCard title="Top languages">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={langsUrl}
-                alt={`${GH_USER} top languages`}
-                loading="lazy"
-                className="w-full h-auto"
-              />
+              <TopLanguages data={data} error={dataError} />
             </StatsCard>
           </Reveal>
 
@@ -398,6 +433,147 @@ function Legend({
       )}
       <span className="text-foreground/80">{label}</span>
     </span>
+  );
+}
+
+function ProfileStats({
+  data,
+  error,
+}: {
+  data: GhData | null;
+  error: boolean;
+}) {
+  if (error) {
+    return (
+      <div className="text-xs text-muted text-center py-6">
+        Couldn&apos;t load profile data.
+      </div>
+    );
+  }
+  if (!data) {
+    return (
+      <div className="w-full animate-pulse space-y-3">
+        <div className="flex items-center gap-3">
+          <div className="h-12 w-12 rounded-full bg-foreground/10" />
+          <div className="flex-1 space-y-1.5">
+            <div className="h-3 w-2/3 rounded bg-foreground/10" />
+            <div className="h-2.5 w-1/2 rounded bg-foreground/10" />
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          {[0, 1, 2, 3].map((i) => (
+            <div key={i} className="h-14 rounded-lg bg-foreground/[0.06]" />
+          ))}
+        </div>
+      </div>
+    );
+  }
+  const tiles = [
+    { label: "Repos", value: data.stats.ownRepos },
+    { label: "Stars", value: data.stats.totalStars },
+    { label: "Followers", value: data.user.followers },
+    { label: "Following", value: data.user.following },
+  ];
+  return (
+    <div className="w-full">
+      <a
+        href={`https://github.com/${data.user.login}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-3 mb-4 group/link"
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={data.user.avatar_url}
+          alt=""
+          loading="lazy"
+          className="h-12 w-12 rounded-full ring-2 ring-border"
+        />
+        <div className="min-w-0">
+          <div className="text-sm font-semibold truncate group-hover/link:underline">
+            {data.user.name || data.user.login}
+          </div>
+          <div className="text-xs text-muted truncate">@{data.user.login}</div>
+        </div>
+      </a>
+      <div className="grid grid-cols-2 gap-2">
+        {tiles.map((t) => (
+          <div
+            key={t.label}
+            className="rounded-lg border border-border/70 bg-background/40 px-3 py-2 text-center"
+          >
+            <div className="text-base sm:text-lg font-bold leading-tight">
+              {t.value}
+            </div>
+            <div className="text-[10px] uppercase tracking-[0.14em] text-muted mt-0.5">
+              {t.label}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function TopLanguages({
+  data,
+  error,
+}: {
+  data: GhData | null;
+  error: boolean;
+}) {
+  if (error) {
+    return (
+      <div className="text-xs text-muted text-center py-6">
+        Couldn&apos;t load language data.
+      </div>
+    );
+  }
+  if (!data) {
+    return (
+      <div className="w-full animate-pulse space-y-3">
+        {[0, 1, 2, 3, 4].map((i) => (
+          <div key={i} className="space-y-1.5">
+            <div className="h-2.5 w-1/3 rounded bg-foreground/10" />
+            <div className="h-2 w-full rounded-full bg-foreground/[0.06]" />
+          </div>
+        ))}
+      </div>
+    );
+  }
+  if (data.languages.length === 0) {
+    return (
+      <div className="text-xs text-muted text-center py-6">
+        No language data yet.
+      </div>
+    );
+  }
+  return (
+    <div className="w-full space-y-2.5">
+      {data.languages.map((l) => (
+        <div key={l.name}>
+          <div className="flex items-center justify-between text-xs mb-1">
+            <span className="inline-flex items-center gap-1.5 font-medium">
+              <span
+                className="h-2 w-2 rounded-full"
+                style={{ background: langColor(l.name) }}
+              />
+              {l.name}
+            </span>
+            <span className="text-muted tabular-nums">{l.pct}%</span>
+          </div>
+          <div className="h-2 rounded-full bg-foreground/[0.07] overflow-hidden">
+            <div
+              className="h-full rounded-full transition-[width] duration-700"
+              style={{
+                width: `${l.pct}%`,
+                background: langColor(l.name),
+              }}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
   );
 }
 

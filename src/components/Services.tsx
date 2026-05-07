@@ -121,6 +121,50 @@ export default function Services() {
       accent: "from-sky-500 to-indigo-500",
     },
     {
+      key: "ai",
+      title: items.ai.title,
+      description: items.ai.description,
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M12 2l1.8 4.6L18.4 8.4 13.8 10.2 12 14.8 10.2 10.2 5.6 8.4 10.2 6.6z" />
+          <path d="M18 16l.9 2.3 2.3.9-2.3.9-.9 2.3-.9-2.3-2.3-.9 2.3-.9z" />
+        </svg>
+      ),
+      accent: "from-violet-500 to-fuchsia-500",
+    },
+    {
+      key: "wordpress",
+      title: items.wordpress.title,
+      description: items.wordpress.description,
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <path d="M7 9l2.5 7L12 9l2.5 7L17 9" />
+        </svg>
+      ),
+      accent: "from-blue-600 to-indigo-600",
+    },
+    {
       key: "maintenance",
       title: items.maintenance.title,
       description: items.maintenance.description,

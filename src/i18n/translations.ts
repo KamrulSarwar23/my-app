@@ -12,6 +12,7 @@ const translationsData = {
       projects: "Projects",
       experience: "Experience",
       contact: "Contact",
+      blog: "Blog",
       cv: "CV",
       downloadCv: "Download CV",
       hireMe: "Hire Me",
@@ -61,7 +62,7 @@ const translationsData = {
         experience: { label: "Experience", value: "3+ Years" },
         education: { label: "Education", value: "MBA · BBA" },
         languages: { label: "Languages", value: "EN · BN · HI" },
-        email: { label: "Email", value: "kh4035209@gmail.com" },
+        email: { label: "Email", value: "kamrulsarwar99@gmail.com" },
         phone: { label: "Phone", value: "+880 1646-669099" },
       },
     },
@@ -101,6 +102,16 @@ const translationsData = {
           description:
             "Bug fixes, performance tuning, security patches and feature iteration on existing Laravel/Next.js codebases.",
         },
+        ai: {
+          title: "AI Features & Integrations",
+          description:
+            "Ship LLM-powered features with OpenAI, Claude, and Gemini — chat assistants, RAG pipelines, agent workflows, and n8n automations wired into your product.",
+        },
+        wordpress: {
+          title: "WordPress Development",
+          description:
+            "Custom themes, plugins, WooCommerce stores, ACF-driven content, REST/Headless setups — performance-tuned, secure, and SEO-ready.",
+        },
       },
     },
     skills: {
@@ -114,6 +125,7 @@ const translationsData = {
         database: "Database",
         devops: "DevOps & Cloud",
         tools: "Tools & Other",
+        ai: "AI & Automation",
       },
     },
     projects: {
@@ -230,6 +242,7 @@ const translationsData = {
       projects: "প্রজেক্ট",
       experience: "অভিজ্ঞতা",
       contact: "যোগাযোগ",
+      blog: "ব্লগ",
       cv: "সিভি",
       downloadCv: "সিভি ডাউনলোড",
       hireMe: "হায়ার করুন",
@@ -279,7 +292,7 @@ const translationsData = {
         experience: { label: "অভিজ্ঞতা", value: "৩+ বছর" },
         education: { label: "শিক্ষা", value: "এমবিএ · বিবিএ" },
         languages: { label: "ভাষা", value: "EN · BN · HI" },
-        email: { label: "ইমেইল", value: "kh4035209@gmail.com" },
+        email: { label: "ইমেইল", value: "kamrulsarwar99@gmail.com" },
         phone: { label: "ফোন", value: "+880 1646-669099" },
       },
     },
@@ -319,6 +332,16 @@ const translationsData = {
           description:
             "বিদ্যমান Laravel/Next.js কোডবেসে বাগ ফিক্স, পারফরম্যান্স টিউনিং, সিকিউরিটি প্যাচ ও নতুন ফিচার সংযোজন।",
         },
+        ai: {
+          title: "AI ফিচার ও ইন্টিগ্রেশন",
+          description:
+            "OpenAI, Claude ও Gemini দিয়ে LLM-চালিত ফিচার তৈরি — চ্যাট অ্যাসিস্ট্যান্ট, RAG পাইপলাইন, এজেন্ট ওয়ার্কফ্লো এবং n8n অটোমেশন আপনার প্রোডাক্টে যুক্ত করি।",
+        },
+        wordpress: {
+          title: "WordPress ডেভেলপমেন্ট",
+          description:
+            "কাস্টম থিম, প্লাগইন, WooCommerce স্টোর, ACF-নির্ভর কন্টেন্ট ও REST/Headless সেটআপ — পারফরম্যান্স-অপ্টিমাইজড, নিরাপদ ও SEO-ফ্রেন্ডলি।",
+        },
       },
     },
     skills: {
@@ -332,6 +355,7 @@ const translationsData = {
         database: "ডাটাবেস",
         devops: "DevOps ও ক্লাউড",
         tools: "টুল ও অন্যান্য",
+        ai: "AI ও অটোমেশন",
       },
     },
     projects: {

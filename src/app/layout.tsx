@@ -133,7 +133,7 @@ const personJsonLd = {
   url: SITE_URL,
   jobTitle: "Full Stack Web Developer",
   description: DESCRIPTION,
-  email: "mailto:kh4035209@gmail.com",
+  email: "mailto:kamrulsarwar99@gmail.com",
   telephone: "+8801646669099",
   address: {
     "@type": "PostalAddress",

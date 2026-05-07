@@ -1,27 +1,34 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useT } from "@/i18n/LanguageProvider";
 
 export default function Footer() {
   const t = useT();
+  const pathname = usePathname();
+  const onHome = pathname === "/";
+  const sectionHref = (id: string) => (onHome ? `#${id}` : `/#${id}`);
 
   const quickLinks = [
-    { href: "#home", label: t.nav.home },
-    { href: "#about", label: t.nav.about },
-    { href: "#services", label: t.nav.services },
-    { href: "#skills", label: t.nav.skills },
-    { href: "#projects", label: t.nav.projects },
-    { href: "#experience", label: t.nav.experience },
-    { href: "#contact", label: t.nav.contact },
+    { href: sectionHref("home"), label: t.nav.home },
+    { href: sectionHref("about"), label: t.nav.about },
+    { href: sectionHref("services"), label: t.nav.services },
+    { href: sectionHref("skills"), label: t.nav.skills },
+    { href: sectionHref("projects"), label: t.nav.projects },
+    { href: sectionHref("experience"), label: t.nav.experience },
+    { href: "/blog", label: t.nav.blog },
+    { href: sectionHref("contact"), label: t.nav.contact },
   ];
 
   const services = [
-    { label: t.services.items.fullstack.title, href: "#services" },
-    { label: t.services.items.ecommerce.title, href: "#services" },
-    { label: t.services.items.api.title, href: "#services" },
-    { label: t.services.items.ui.title, href: "#services" },
-    { label: t.services.items.cloud.title, href: "#services" },
-    { label: t.services.items.maintenance.title, href: "#services" },
+    { label: t.services.items.fullstack.title, href: sectionHref("services") },
+    { label: t.services.items.ecommerce.title, href: sectionHref("services") },
+    { label: t.services.items.ai.title, href: sectionHref("services") },
+    { label: t.services.items.wordpress.title, href: sectionHref("services") },
+    { label: t.services.items.api.title, href: sectionHref("services") },
+    { label: t.services.items.ui.title, href: sectionHref("services") },
+    { label: t.services.items.cloud.title, href: sectionHref("services") },
+    { label: t.services.items.maintenance.title, href: sectionHref("services") },
   ];
 
   const socials = [
@@ -36,7 +43,7 @@ export default function Footer() {
     },
     {
       label: "LinkedIn",
-      href: "#",
+      href: "https://www.linkedin.com/in/kamrul-hasan-5546561ba/",
       icon: (
         <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
           <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z" />
@@ -45,7 +52,7 @@ export default function Footer() {
     },
     {
       label: "Facebook",
-      href: "#",
+      href: "https://www.facebook.com/kamrulhasan.shuvo.792/",
       icon: (
         <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
           <path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.45 2.89h-2.33v6.99A10 10 0 0 0 22 12z" />
@@ -54,7 +61,7 @@ export default function Footer() {
     },
     {
       label: "X (Twitter)",
-      href: "#",
+      href: "https://x.com/KamrulHasan2399",
       icon: (
         <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
           <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644z" />
@@ -63,7 +70,7 @@ export default function Footer() {
     },
     {
       label: "Email",
-      href: "mailto:kh4035209@gmail.com",
+      href: "mailto:kamrulsarwar99@gmail.com",
       icon: (
         <svg
           viewBox="0 0 24 24"
@@ -91,7 +98,7 @@ export default function Footer() {
         <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-12">
           {/* Brand */}
           <div className="sm:col-span-2 md:col-span-12 lg:col-span-4">
-            <a href="#home" className="inline-block">
+            <a href={sectionHref("home")} className="inline-block">
               <span className="text-2xl font-bold tracking-tight gradient-text">
                 Kamrul.
               </span>
@@ -102,7 +109,7 @@ export default function Footer() {
 
             {/* Email pill */}
             <a
-              href="mailto:kh4035209@gmail.com"
+              href="mailto:kamrulsarwar99@gmail.com"
               className="mt-5 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-medium hover:border-foreground/30 hover:bg-foreground/5 transition"
             >
               <svg
@@ -118,7 +125,7 @@ export default function Footer() {
                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                 <polyline points="22,6 12,13 2,6" />
               </svg>
-              kh4035209@gmail.com
+              kamrulsarwar99@gmail.com
             </a>
 
             {/* Social row */}
@@ -234,7 +241,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="mailto:kh4035209@gmail.com"
+                  href="mailto:kamrulsarwar99@gmail.com"
                   className="flex items-start gap-2 hover:text-foreground transition-colors break-all"
                 >
                   <svg
@@ -251,7 +258,7 @@ export default function Footer() {
                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                     <polyline points="22,6 12,13 2,6" />
                   </svg>
-                  <span>kh4035209@gmail.com</span>
+                  <span>kamrulsarwar99@gmail.com</span>
                 </a>
               </li>
               <li className="pt-2">

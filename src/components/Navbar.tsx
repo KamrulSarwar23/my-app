@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import ThemeToggle from "./ThemeToggle";
 import LanguageSwitcher from "./LanguageSwitcher";
 import ColorPaletteSwitcher from "./ColorPaletteSwitcher";
@@ -18,18 +19,23 @@ const sectionIds = [
 
 export default function Navbar() {
   const t = useT();
+  const pathname = usePathname();
+  const onHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string>("#home");
 
+  const sectionHref = (id: string) => (onHome ? `#${id}` : `/#${id}`);
+
   const links = [
-    { href: "#home", label: t.nav.home },
-    { href: "#about", label: t.nav.about },
-    { href: "#services", label: t.nav.services },
-    { href: "#skills", label: t.nav.skills },
-    { href: "#projects", label: t.nav.projects },
-    { href: "#experience", label: t.nav.experience },
-    { href: "#contact", label: t.nav.contact },
+    { href: sectionHref("home"), match: "#home", label: t.nav.home },
+    { href: sectionHref("about"), match: "#about", label: t.nav.about },
+    { href: sectionHref("services"), match: "#services", label: t.nav.services },
+    { href: sectionHref("skills"), match: "#skills", label: t.nav.skills },
+    { href: sectionHref("projects"), match: "#projects", label: t.nav.projects },
+    { href: sectionHref("experience"), match: "#experience", label: t.nav.experience },
+    { href: "/blog", match: "/blog", label: t.nav.blog },
+    { href: sectionHref("contact"), match: "#contact", label: t.nav.contact },
   ];
 
   useEffect(() => {
@@ -40,6 +46,10 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
+    if (!onHome) {
+      setActive(pathname?.startsWith("/blog") ? "/blog" : "");
+      return;
+    }
     const sections = sectionIds
       .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => !!el);
@@ -56,7 +66,7 @@ export default function Navbar() {
     );
     sections.forEach((s) => observer.observe(s));
     return () => observer.disconnect();
-  }, []);
+  }, [onHome, pathname]);
 
   return (
     <header
@@ -68,7 +78,7 @@ export default function Navbar() {
     >
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex items-center justify-between gap-3">
         <a
-          href="#home"
+          href={sectionHref("home")}
           className="text-xl font-bold tracking-tight gradient-text shrink-0"
         >
           Kamrul.
@@ -76,7 +86,7 @@ export default function Navbar() {
 
         <ul className="hidden lg:flex items-center gap-1">
           {links.map((link) => {
-            const isActive = active === link.href;
+            const isActive = active === link.match;
             return (
               <li key={link.href}>
                 <a
@@ -124,7 +134,7 @@ export default function Navbar() {
             {t.nav.cv}
           </a>
           <a
-            href="mailto:kh4035209@gmail.com"
+            href="mailto:kamrulsarwar99@gmail.com"
             className="inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background hover:opacity-90 transition"
           >
             {t.nav.hireMe}
@@ -173,7 +183,7 @@ export default function Navbar() {
         <div className="lg:hidden border-t border-border bg-background/95 backdrop-blur-md">
           <ul className="px-6 py-4 flex flex-col gap-1">
             {links.map((link) => {
-              const isActive = active === link.href;
+              const isActive = active === link.match;
               return (
                 <li key={link.href}>
                   <a
@@ -202,7 +212,7 @@ export default function Navbar() {
             </li>
             <li>
               <a
-                href="mailto:kh4035209@gmail.com"
+                href="mailto:kamrulsarwar99@gmail.com"
                 onClick={() => setOpen(false)}
                 className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background"
               >

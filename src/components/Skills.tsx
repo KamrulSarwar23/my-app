@@ -6,7 +6,7 @@ import { useT } from "@/i18n/LanguageProvider";
 import Reveal from "./Reveal";
 import { TECH_ICONS, TechIcon } from "./TechIcons";
 
-type GroupId = "frontend" | "backend" | "database" | "devops" | "tools";
+type GroupId = "frontend" | "backend" | "database" | "devops" | "tools" | "ai";
 
 type Tech = { iconKey: keyof typeof TECH_ICONS; label: string };
 
@@ -57,7 +57,21 @@ export default function Skills() {
       items: [
         { iconKey: "php", label: "PHP" },
         { iconKey: "laravel", label: "Laravel" },
+        { iconKey: "wordpress", label: "WordPress" },
         { iconKey: "api", label: "REST API" },
+      ],
+    },
+    {
+      id: "ai",
+      title: t.skills.groups.ai,
+      icon: <AIIcon />,
+      items: [
+        { iconKey: "openai", label: "OpenAI" },
+        { iconKey: "claude", label: "Claude" },
+        { iconKey: "gemini", label: "Gemini" },
+        { iconKey: "n8n", label: "n8n" },
+        { iconKey: "ai", label: "AI Integrations" },
+        { iconKey: "plug", label: "Agent Workflows" },
       ],
     },
     {
@@ -278,6 +292,24 @@ function CloudIcon() {
       strokeLinejoin="round"
     >
       <path d="M17.5 19a4.5 4.5 0 1 0-1.4-8.78 6 6 0 0 0-11.6 2.78A4 4 0 0 0 6 19h11.5z" />
+    </svg>
+  );
+}
+
+function AIIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="18"
+      height="18"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M12 2l1.8 4.6L18.4 8.4 13.8 10.2 12 14.8 10.2 10.2 5.6 8.4 10.2 6.6z" />
+      <path d="M18 16l.9 2.3 2.3.9-2.3.9-.9 2.3-.9-2.3-2.3-.9 2.3-.9z" />
     </svg>
   );
 }
