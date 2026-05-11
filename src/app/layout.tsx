@@ -88,11 +88,6 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/apple-icon.png",
-  },
   category: "portfolio",
 };
 
@@ -162,6 +157,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       className={`${geistSans.variable} ${geistMono.variable} ${hindSiliguri.variable} h-full antialiased scroll-smooth`}
       suppressHydrationWarning
     >

@@ -49,16 +49,16 @@ export default async function BlogDetailPage({ params }: { params: Params }) {
   return (
     <>
       <Navbar />
-      <main className="flex-1 pt-28 sm:pt-32 pb-20 relative">
+      <main className="flex-1 pt-28 sm:pt-32 pb-20 relative overflow-hidden">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -z-10 left-1/2 -translate-x-1/2 top-10 w-[800px] h-[300px] brand-glow blur-3xl rounded-full opacity-60"
+          className="pointer-events-none absolute -z-10 left-1/2 -translate-x-1/2 top-10 w-[min(800px,120vw)] h-[300px] brand-glow blur-3xl rounded-full opacity-60"
         />
 
-        <article className="max-w-3xl mx-auto px-6 sm:px-8">
+        <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-foreground transition mb-8"
+            className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-foreground transition mb-6 sm:mb-8"
           >
             <svg
               viewBox="0 0 24 24"
@@ -77,15 +77,15 @@ export default async function BlogDetailPage({ params }: { params: Params }) {
           </Link>
 
           <header>
-            <div className="flex items-center gap-2 text-xs text-muted">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted">
               <time dateTime={post.date}>{formatDate(post.date)}</time>
-              <span>·</span>
+              <span aria-hidden="true">·</span>
               <span>{post.readingTime}</span>
             </div>
-            <h1 className="mt-3 text-3xl sm:text-4xl font-bold tracking-tight leading-tight">
+            <h1 className="mt-3 text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight leading-tight break-words">
               {post.title}
             </h1>
-            <p className="mt-4 text-base text-muted leading-relaxed">
+            <p className="mt-4 text-sm sm:text-base text-muted leading-relaxed break-words">
               {post.excerpt}
             </p>
             <div className="mt-5 flex flex-wrap gap-1.5">
@@ -100,15 +100,15 @@ export default async function BlogDetailPage({ params }: { params: Params }) {
             </div>
           </header>
 
-          <div className="mt-10 h-px brand-gradient opacity-40" />
+          <div className="mt-8 sm:mt-10 h-px brand-gradient opacity-40" />
 
-          <div className="mt-10 space-y-5 text-[15.5px] leading-[1.75] text-foreground/90">
+          <div className="mt-8 sm:mt-10 space-y-5 text-[15px] sm:text-[15.5px] leading-[1.75] text-foreground/90 break-words">
             {post.body.map((node, i) => (
               <NodeRenderer key={i} node={node} />
             ))}
           </div>
 
-          <div className="mt-16 pt-8 border-t border-border">
+          <div className="mt-12 sm:mt-16 pt-6 sm:pt-8 border-t border-border">
             <Link
               href="/blog"
               className="inline-flex items-center gap-2 text-sm font-medium text-muted hover:text-foreground transition"
@@ -140,20 +140,22 @@ export default async function BlogDetailPage({ params }: { params: Params }) {
 function NodeRenderer({ node }: { node: BlogNode }) {
   switch (node.type) {
     case "p":
-      return <p>{node.text}</p>;
+      return <p className="break-words">{node.text}</p>;
     case "h2":
       return (
-        <h2 className="text-2xl font-bold tracking-tight mt-12 mb-3">
+        <h2 className="text-xl sm:text-2xl font-bold tracking-tight mt-10 sm:mt-12 mb-3 break-words">
           {node.text}
         </h2>
       );
     case "h3":
       return (
-        <h3 className="text-lg font-semibold mt-8 mb-2">{node.text}</h3>
+        <h3 className="text-base sm:text-lg font-semibold mt-6 sm:mt-8 mb-2 break-words">
+          {node.text}
+        </h3>
       );
     case "ul":
       return (
-        <ul className="list-disc pl-6 space-y-2 marker:text-foreground/40">
+        <ul className="list-disc pl-5 sm:pl-6 space-y-2 marker:text-foreground/40 break-words">
           {node.items.map((item, i) => (
             <li key={i}>{item}</li>
           ))}
@@ -161,7 +163,7 @@ function NodeRenderer({ node }: { node: BlogNode }) {
       );
     case "ol":
       return (
-        <ol className="list-decimal pl-6 space-y-2 marker:text-foreground/60 marker:font-semibold">
+        <ol className="list-decimal pl-5 sm:pl-6 space-y-2 marker:text-foreground/60 marker:font-semibold break-words">
           {node.items.map((item, i) => (
             <li key={i}>{item}</li>
           ))}
@@ -169,13 +171,13 @@ function NodeRenderer({ node }: { node: BlogNode }) {
       );
     case "code":
       return (
-        <pre className="rounded-xl border border-border bg-foreground/[0.04] p-4 overflow-x-auto text-[13px] font-mono leading-relaxed">
+        <pre className="rounded-xl border border-border bg-foreground/[0.04] p-3 sm:p-4 overflow-x-auto text-[12px] sm:text-[13px] font-mono leading-relaxed max-w-full">
           <code>{node.code}</code>
         </pre>
       );
     case "quote":
       return (
-        <blockquote className="border-l-2 border-foreground/30 pl-5 italic text-foreground/80">
+        <blockquote className="border-l-2 border-foreground/30 pl-4 sm:pl-5 italic text-foreground/80 break-words">
           {node.text}
         </blockquote>
       );

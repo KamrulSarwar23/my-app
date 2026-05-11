@@ -1,15 +1,9 @@
-import Link from "next/link";
-import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import ScrollToTop from "@/components/ScrollToTop";
-import { listPosts } from "@/content/blog";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Blog",
-  description:
-    "Notes on full-stack web development, AI integration, modern programming workflows, and what I'm learning shipping production apps.",
-};
+import Link from "next/link";
+import { SectionHeading } from "./About";
+import Reveal from "./Reveal";
+import { listPosts } from "@/content/blog";
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-US", {
@@ -19,40 +13,29 @@ function formatDate(iso: string) {
   });
 }
 
-export default function BlogIndexPage() {
-  const posts = listPosts();
+export default function Blog() {
+  const posts = listPosts().slice(0, 3);
 
   return (
-    <>
-      <Navbar />
-      <main className="flex-1 pt-28 sm:pt-32 pb-20 relative overflow-hidden">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10 bg-grid opacity-40"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -z-10 left-1/2 -translate-x-1/2 top-20 w-[min(800px,120vw)] h-[400px] brand-glow blur-3xl rounded-full"
-        />
+    <section id="blog" className="relative py-20 sm:py-28 overflow-hidden">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -z-10 left-1/2 -translate-x-1/2 top-10 w-[min(800px,120vw)] h-[400px] brand-glow blur-3xl rounded-full opacity-60"
+      />
 
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <header className="text-center">
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted">
-              Writing
-            </p>
-            <h1 className="mt-3 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
-              <span className="gradient-text">Blog</span>
-            </h1>
-            <p className="mt-4 text-sm sm:text-base text-muted max-w-2xl mx-auto leading-relaxed">
-              Notes on full-stack development, AI integration, and what I&apos;m
-              learning shipping production apps.
-            </p>
-          </header>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <SectionHeading
+            eyebrow="Writing"
+            title="Latest from the blog"
+            description="Notes on full-stack development, AI integration, and what I'm learning shipping production apps."
+          />
+        </Reveal>
 
-          <div className="mt-10 sm:mt-12 grid gap-5 sm:gap-6 md:grid-cols-2">
-            {posts.map((post) => (
+        <div className="mt-10 sm:mt-12 grid gap-5 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {posts.map((post, i) => (
+            <Reveal key={post.slug} delay={i * 80}>
               <Link
-                key={post.slug}
                 href={`/blog/${post.slug}`}
                 className="lift group relative flex flex-col h-full rounded-2xl border border-border bg-card p-5 sm:p-6 hover:border-foreground/20 hover:shadow-2xl transition overflow-hidden"
               >
@@ -64,9 +47,9 @@ export default function BlogIndexPage() {
                   <span>{post.readingTime}</span>
                 </div>
 
-                <h2 className="mt-3 text-lg sm:text-xl font-semibold leading-snug group-hover:text-accent transition-colors break-words">
+                <h3 className="mt-3 text-lg font-semibold leading-snug group-hover:text-accent transition-colors break-words">
                   {post.title}
-                </h2>
+                </h3>
 
                 <p className="mt-3 text-sm text-muted leading-relaxed flex-1 break-words">
                   {post.excerpt}
@@ -74,7 +57,7 @@ export default function BlogIndexPage() {
 
                 <div className="mt-5 flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-border">
                   <div className="flex flex-wrap gap-1.5 min-w-0">
-                    {post.tags.slice(0, 3).map((tag) => (
+                    {post.tags.slice(0, 2).map((tag) => (
                       <span
                         key={tag}
                         className="text-[11px] px-2 py-0.5 rounded-md bg-foreground/5 text-foreground/70"
@@ -102,12 +85,35 @@ export default function BlogIndexPage() {
                   </span>
                 </div>
               </Link>
-            ))}
-          </div>
+            </Reveal>
+          ))}
         </div>
-      </main>
-      <Footer />
-      <ScrollToTop />
-    </>
+
+        <Reveal>
+          <div className="mt-12 flex justify-center">
+            <Link
+              href="/blog"
+              className="group inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3 text-sm font-semibold hover:border-foreground/30 hover:bg-foreground/5 transition"
+            >
+              View all blogs
+              <svg
+                viewBox="0 0 24 24"
+                width="14"
+                height="14"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="transition-transform group-hover:translate-x-0.5"
+              >
+                <path d="M5 12h14" />
+                <path d="M13 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
+        </Reveal>
+      </div>
+    </section>
   );
 }

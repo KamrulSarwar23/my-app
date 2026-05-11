@@ -147,7 +147,7 @@ export default function Hero() {
                   fill
                   priority
                   sizes="(max-width: 640px) 11rem, (max-width: 1024px) 13rem, 15rem"
-                  className="object-cover transition-transform duration-700 hover:scale-105"
+                  className="object-cover transition-transform duration-700 hover:scale-105 dark:brightness-[0.88] dark:contrast-105"
                 />
 
                 {/* Bottom gradient overlay for depth */}

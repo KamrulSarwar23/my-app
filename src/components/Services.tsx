@@ -1,197 +1,21 @@
 "use client";
 
+import Link from "next/link";
 import { SectionHeading } from "./About";
 import { useT } from "@/i18n/LanguageProvider";
 import Reveal from "./Reveal";
+import ServiceIcon from "./ServiceIcon";
+import { services } from "@/content/services";
 
 export default function Services() {
   const t = useT();
   const items = t.services.items;
 
-  const services = [
-    {
-      key: "fullstack",
-      title: items.fullstack.title,
-      description: items.fullstack.description,
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="22"
-          height="22"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <polyline points="16 18 22 12 16 6" />
-          <polyline points="8 6 2 12 8 18" />
-        </svg>
-      ),
-      accent: "from-blue-500 to-cyan-500",
-    },
-    {
-      key: "ecommerce",
-      title: items.ecommerce.title,
-      description: items.ecommerce.description,
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="22"
-          height="22"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <circle cx="9" cy="21" r="1" />
-          <circle cx="20" cy="21" r="1" />
-          <path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6" />
-        </svg>
-      ),
-      accent: "from-purple-500 to-pink-500",
-    },
-    {
-      key: "api",
-      title: items.api.title,
-      description: items.api.description,
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="22"
-          height="22"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-        </svg>
-      ),
-      accent: "from-emerald-500 to-teal-500",
-    },
-    {
-      key: "ui",
-      title: items.ui.title,
-      description: items.ui.description,
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="22"
-          height="22"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-          <line x1="8" y1="21" x2="16" y2="21" />
-          <line x1="12" y1="17" x2="12" y2="21" />
-        </svg>
-      ),
-      accent: "from-amber-500 to-orange-500",
-    },
-    {
-      key: "cloud",
-      title: items.cloud.title,
-      description: items.cloud.description,
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="22"
-          height="22"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
-        </svg>
-      ),
-      accent: "from-sky-500 to-indigo-500",
-    },
-    {
-      key: "ai",
-      title: items.ai.title,
-      description: items.ai.description,
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="22"
-          height="22"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M12 2l1.8 4.6L18.4 8.4 13.8 10.2 12 14.8 10.2 10.2 5.6 8.4 10.2 6.6z" />
-          <path d="M18 16l.9 2.3 2.3.9-2.3.9-.9 2.3-.9-2.3-2.3-.9 2.3-.9z" />
-        </svg>
-      ),
-      accent: "from-violet-500 to-fuchsia-500",
-    },
-    {
-      key: "wordpress",
-      title: items.wordpress.title,
-      description: items.wordpress.description,
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="22"
-          height="22"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <circle cx="12" cy="12" r="10" />
-          <path d="M7 9l2.5 7L12 9l2.5 7L17 9" />
-        </svg>
-      ),
-      accent: "from-blue-600 to-indigo-600",
-    },
-    {
-      key: "maintenance",
-      title: items.maintenance.title,
-      description: items.maintenance.description,
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="22"
-          height="22"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
-        </svg>
-      ),
-      accent: "from-rose-500 to-red-500",
-    },
-  ];
-
   return (
     <section id="services" className="relative py-20 sm:py-28 overflow-hidden">
       <div className="pointer-events-none absolute inset-0 -z-10 bg-grid opacity-60" />
 
-      <div className="max-w-6xl mx-auto px-6 sm:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeading
             eyebrow={t.services.eyebrow}
@@ -201,31 +25,60 @@ export default function Services() {
         </Reveal>
 
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {services.map((service, i) => (
-            <Reveal key={service.key} delay={i * 80}>
-              <div className="lift group relative h-full rounded-2xl border border-border bg-card p-6 hover:border-foreground/20 hover:shadow-xl overflow-hidden">
-                {/* Soft glow that follows hover */}
-                <div
-                  className="absolute -top-12 -right-12 h-32 w-32 rounded-full brand-gradient-tr opacity-0 blur-2xl group-hover:opacity-30 transition-opacity duration-500"
-                  aria-hidden="true"
-                />
-
-                <div
-                  className="relative inline-flex h-11 w-11 items-center justify-center rounded-xl brand-gradient-tr text-white shadow-md transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6"
+          {services.slice(0, 6).map((service, i) => {
+            const translated = items[service.iconKey];
+            return (
+              <Reveal key={service.slug} delay={i * 80}>
+                <Link
+                  href={`/services/${service.slug}`}
+                  className="lift group relative block h-full rounded-2xl border border-border bg-card p-6 hover:border-foreground/20 hover:shadow-xl overflow-hidden"
                 >
-                  {service.icon}
-                </div>
-                <h3 className="mt-5 text-lg font-semibold">{service.title}</h3>
-                <p className="mt-2 text-sm text-muted leading-relaxed">
-                  {service.description}
-                </p>
+                  <div
+                    className="absolute -top-12 -right-12 h-32 w-32 rounded-full brand-gradient-tr opacity-0 blur-2xl group-hover:opacity-30 transition-opacity duration-500"
+                    aria-hidden="true"
+                  />
 
-                {/* Bottom indicator on hover */}
-                <div className="mt-5 h-px w-0 brand-gradient transition-all duration-500 group-hover:w-full" />
-              </div>
-            </Reveal>
-          ))}
+                  <div className="relative inline-flex h-11 w-11 items-center justify-center rounded-xl brand-gradient-tr text-white shadow-md transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
+                    <ServiceIcon iconKey={service.iconKey} />
+                  </div>
+                  <h3 className="mt-5 text-lg font-semibold group-hover:text-accent transition-colors">
+                    {translated.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-muted leading-relaxed">
+                    {translated.description}
+                  </p>
+
+                  <div className="mt-5 h-px w-0 brand-gradient transition-all duration-500 group-hover:w-full" />
+                </Link>
+              </Reveal>
+            );
+          })}
         </div>
+
+        <Reveal>
+          <div className="mt-12 flex justify-center">
+            <Link
+              href="/services"
+              className="group inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3 text-sm font-semibold hover:border-foreground/30 hover:bg-foreground/5 transition"
+            >
+              View all services
+              <svg
+                viewBox="0 0 24 24"
+                width="14"
+                height="14"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="transition-transform group-hover:translate-x-0.5"
+              >
+                <path d="M5 12h14" />
+                <path d="M13 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

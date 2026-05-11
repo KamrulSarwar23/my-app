@@ -47,7 +47,7 @@ export default async function ProjectDetailPage({
       <main className="flex-1 pt-28 sm:pt-32 pb-20 relative">
         <div className="max-w-4xl mx-auto px-6 sm:px-8">
           <Link
-            href="/#projects"
+            href="/projects"
             className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-foreground transition mb-6"
           >
             <svg
@@ -199,7 +199,7 @@ export default async function ProjectDetailPage({
                 Get in touch
               </Link>
               <Link
-                href="/#projects"
+                href="/projects"
                 className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-medium hover:bg-foreground/5 transition"
               >
                 See more projects

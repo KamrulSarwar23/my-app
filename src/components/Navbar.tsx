@@ -14,6 +14,7 @@ const sectionIds = [
   "skills",
   "projects",
   "experience",
+  "blog",
   "contact",
 ] as const;
 
@@ -34,7 +35,7 @@ export default function Navbar() {
     { href: sectionHref("skills"), match: "#skills", label: t.nav.skills },
     { href: sectionHref("projects"), match: "#projects", label: t.nav.projects },
     { href: sectionHref("experience"), match: "#experience", label: t.nav.experience },
-    { href: "/blog", match: "/blog", label: t.nav.blog },
+    { href: sectionHref("blog"), match: "#blog", label: t.nav.blog },
     { href: sectionHref("contact"), match: "#contact", label: t.nav.contact },
   ];
 
@@ -47,7 +48,7 @@ export default function Navbar() {
 
   useEffect(() => {
     if (!onHome) {
-      setActive(pathname?.startsWith("/blog") ? "/blog" : "");
+      setActive(pathname?.startsWith("/blog") ? "#blog" : "");
       return;
     }
     const sections = sectionIds

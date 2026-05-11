@@ -29,12 +29,14 @@ export default function Skills() {
   const groups: {
     id: GroupId;
     title: string;
+    tagline: string;
     icon: React.ReactNode;
     items: Tech[];
   }[] = [
     {
       id: "frontend",
       title: t.skills.groups.frontend,
+      tagline: "Markup, styles, and frameworks I reach for",
       icon: <FrontendIcon />,
       items: [
         { iconKey: "html", label: "HTML" },
@@ -51,19 +53,24 @@ export default function Skills() {
       ],
     },
     {
-      id: "backend",
-      title: t.skills.groups.backend,
-      icon: <BackendIcon />,
+      id: "tools",
+      title: t.skills.groups.tools,
+      tagline: "Daily drivers and editor companions",
+      icon: <ToolsIcon />,
       items: [
-        { iconKey: "php", label: "PHP" },
-        { iconKey: "laravel", label: "Laravel" },
-        { iconKey: "wordpress", label: "WordPress" },
-        { iconKey: "api", label: "REST API" },
+        { iconKey: "git", label: "Git" },
+        { iconKey: "github", label: "GitHub" },
+        { iconKey: "vscode", label: "VS Code" },
+        { iconKey: "postman", label: "Postman" },
+        { iconKey: "axios", label: "Axios" },
+        { iconKey: "ai", label: "AI Integration" },
+        { iconKey: "plug", label: "3rd-Party APIs" },
       ],
     },
     {
       id: "ai",
       title: t.skills.groups.ai,
+      tagline: "LLMs, agents, and automation pipelines",
       icon: <AIIcon />,
       items: [
         { iconKey: "openai", label: "OpenAI" },
@@ -75,17 +82,9 @@ export default function Skills() {
       ],
     },
     {
-      id: "database",
-      title: t.skills.groups.database,
-      icon: <DatabaseIcon />,
-      items: [
-        { iconKey: "mysql", label: "MySQL" },
-        { iconKey: "mongodb", label: "MongoDB" },
-      ],
-    },
-    {
       id: "devops",
       title: t.skills.groups.devops,
+      tagline: "Where my apps ship and how they stay up",
       icon: <CloudIcon />,
       items: [
         { iconKey: "aws", label: "AWS EC2" },
@@ -97,17 +96,25 @@ export default function Skills() {
       ],
     },
     {
-      id: "tools",
-      title: t.skills.groups.tools,
-      icon: <ToolsIcon />,
+      id: "backend",
+      title: t.skills.groups.backend,
+      tagline: "Languages and frameworks behind the API",
+      icon: <BackendIcon />,
       items: [
-        { iconKey: "git", label: "Git" },
-        { iconKey: "github", label: "GitHub" },
-        { iconKey: "vscode", label: "VS Code" },
-        { iconKey: "postman", label: "Postman" },
-        { iconKey: "axios", label: "Axios" },
-        { iconKey: "ai", label: "AI Integration" },
-        { iconKey: "plug", label: "3rd-Party APIs" },
+        { iconKey: "php", label: "PHP" },
+        { iconKey: "laravel", label: "Laravel" },
+        { iconKey: "wordpress", label: "WordPress" },
+        { iconKey: "api", label: "REST API" },
+      ],
+    },
+    {
+      id: "database",
+      title: t.skills.groups.database,
+      tagline: "Where the data lives",
+      icon: <DatabaseIcon />,
+      items: [
+        { iconKey: "mysql", label: "MySQL" },
+        { iconKey: "mongodb", label: "MongoDB" },
       ],
     },
   ];
@@ -120,10 +127,10 @@ export default function Skills() {
       <div className="pointer-events-none absolute inset-0 -z-10 bg-dots opacity-50" />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -z-10 left-1/2 -translate-x-1/2 top-20 w-[800px] h-[400px] brand-glow blur-3xl rounded-full"
+        className="pointer-events-none absolute -z-10 left-1/2 -translate-x-1/2 top-20 w-[min(800px,120vw)] h-[400px] brand-glow blur-3xl rounded-full"
       />
 
-      <div className="max-w-6xl mx-auto px-6 sm:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeading
             eyebrow={t.skills.eyebrow}
@@ -132,88 +139,79 @@ export default function Skills() {
           />
         </Reveal>
 
-        <div className="mt-12 grid gap-5 lg:grid-cols-12">
-          {groups.map((group, gi) => {
-            const isWide = group.id === "frontend";
-            return (
-              <Reveal
-                key={group.id}
-                delay={gi * 80}
-                direction={gi % 2 === 0 ? "left" : "right"}
-                className={isWide ? "lg:col-span-12" : "lg:col-span-6"}
-              >
-                <div className="group relative h-full overflow-hidden rounded-3xl border border-border bg-card p-6 sm:p-7 transition-all duration-300 hover:border-foreground/20 hover:-translate-y-1 hover:shadow-2xl">
-                  {/* Hover glow */}
-                  <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute -top-24 -right-24 h-56 w-56 rounded-full brand-gradient-tr opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-25"
-                  />
-                  {/* Top accent bar */}
-                  <span className="absolute top-0 left-0 right-0 h-px brand-gradient origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100" />
+        <div className="mt-10 sm:mt-12 lg:columns-2 lg:gap-6">
+          {groups.map((group, gi) => (
+            <Reveal
+              key={group.id}
+              delay={gi * 80}
+              direction={gi % 2 === 0 ? "left" : "right"}
+              className="break-inside-avoid mb-5 sm:mb-6 last:mb-0"
+            >
+              <div className="group relative overflow-hidden rounded-3xl border border-border bg-card p-5 sm:p-7 transition-all duration-300 hover:border-foreground/20 hover:-translate-y-1 hover:shadow-2xl">
+                {/* Hover glow */}
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -top-24 -right-24 h-56 w-56 rounded-full brand-gradient-tr opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-25"
+                />
+                {/* Top accent bar */}
+                <span className="absolute top-0 left-0 right-0 h-px brand-gradient origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100" />
 
-                  {/* Header */}
-                  <div className="relative flex items-center justify-between gap-4">
-                    <div className="flex items-center gap-3">
-                      <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl brand-gradient-tr text-white shadow-md">
-                        {group.icon}
-                      </span>
-                      <div>
-                        <div className="text-[10px] uppercase tracking-[0.18em] font-bold text-muted">
-                          Stack
-                        </div>
-                        <h3 className="text-lg font-semibold leading-tight">
-                          {group.title}
-                        </h3>
-                      </div>
-                    </div>
-                    <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-border bg-background/60 backdrop-blur px-2.5 py-1 text-[11px] font-semibold text-muted">
-                      <span className="brand-gradient inline-block h-1.5 w-1.5 rounded-full" />
-                      {group.items.length} tools
+                {/* Header */}
+                <div className="relative flex items-start justify-between gap-3 sm:gap-4">
+                  <div className="flex items-start gap-3 min-w-0">
+                    <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl brand-gradient-tr text-white shadow-md">
+                      {group.icon}
                     </span>
+                    <div className="min-w-0">
+                      <h3 className="text-lg sm:text-xl font-semibold leading-tight tracking-tight">
+                        {group.title}
+                      </h3>
+                      <p className="mt-1 text-xs sm:text-sm text-muted leading-relaxed line-clamp-2">
+                        {group.tagline}
+                      </p>
+                    </div>
                   </div>
-
-                  {/* Tile grid */}
-                  <div
-                    className={`relative mt-6 grid gap-2.5 sm:gap-3 ${
-                      isWide
-                        ? "grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-11"
-                        : "grid-cols-3 sm:grid-cols-4 md:grid-cols-5"
-                    }`}
-                  >
-                    {group.items.map((item, i) => {
-                      const def = TECH_ICONS[item.iconKey];
-                      return (
-                        <div
-                          key={`${item.iconKey}-${i}`}
-                          style={{ transitionDelay: `${i * 25}ms` }}
-                          className="tech-tile group/tile relative flex flex-col items-center justify-center gap-2 aspect-square rounded-2xl border border-border bg-background/60 backdrop-blur p-2 hover:-translate-y-1.5 hover:border-foreground/25 hover:shadow-lg transition-all duration-300"
-                        >
-                          <span className="relative flex items-center justify-center transition-transform duration-300 group-hover/tile:scale-110">
-                            <TechIcon def={def} isDark={isDark} size={26} />
-                          </span>
-                          <span className="text-[10px] sm:text-[11px] font-semibold text-foreground/80 text-center leading-tight line-clamp-2">
-                            {item.label}
-                          </span>
-                          {/* Per-tile tinted glow on hover */}
-                          <span
-                            aria-hidden="true"
-                            className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover/tile:opacity-100 transition-opacity duration-300"
-                            style={{
-                              background: `radial-gradient(circle at 50% 0%, ${
-                                isDark && def.colorDark
-                                  ? def.colorDark
-                                  : def.color
-                              }22, transparent 70%)`,
-                            }}
-                          />
-                        </div>
-                      );
-                    })}
-                  </div>
+                  <span className="hidden sm:inline-flex shrink-0 items-center gap-1.5 rounded-full border border-border bg-background/70 backdrop-blur px-2.5 py-1 text-[11px] font-semibold text-muted">
+                    <span className="brand-gradient inline-block h-1.5 w-1.5 rounded-full" />
+                    {group.items.length}
+                  </span>
                 </div>
-              </Reveal>
-            );
-          })}
+
+                {/* Tile grid — uniform across all cards */}
+                <div className="relative mt-5 sm:mt-6 grid gap-2.5 sm:gap-3 grid-cols-3 sm:grid-cols-4 md:grid-cols-5">
+                  {group.items.map((item, i) => {
+                    const def = TECH_ICONS[item.iconKey];
+                    return (
+                      <div
+                        key={`${item.iconKey}-${i}`}
+                        style={{ transitionDelay: `${i * 25}ms` }}
+                        className="tech-tile group/tile relative flex flex-col items-center justify-center gap-2 aspect-square rounded-2xl border border-border bg-background/60 backdrop-blur p-2 hover:-translate-y-1.5 hover:border-foreground/25 hover:shadow-lg transition-all duration-300"
+                      >
+                        <span className="relative flex items-center justify-center transition-transform duration-300 group-hover/tile:scale-110">
+                          <TechIcon def={def} isDark={isDark} size={26} />
+                        </span>
+                        <span className="text-[10px] sm:text-[11px] font-semibold text-foreground/80 text-center leading-tight line-clamp-2">
+                          {item.label}
+                        </span>
+                        {/* Per-tile tinted glow on hover */}
+                        <span
+                          aria-hidden="true"
+                          className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover/tile:opacity-100 transition-opacity duration-300"
+                          style={{
+                            background: `radial-gradient(circle at 50% 0%, ${
+                              isDark && def.colorDark
+                                ? def.colorDark
+                                : def.color
+                            }22, transparent 70%)`,
+                          }}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
