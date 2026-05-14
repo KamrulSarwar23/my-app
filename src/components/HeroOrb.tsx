@@ -66,12 +66,10 @@ const vertexShader = /* glsl */ `
   void main() {
     float t = uTime * uSpeed;
 
-    // layered noise for organic morphing
     float n  = snoise(position * 0.7 + vec3(t * 0.45, t * 0.30, t * 0.55));
     n       += snoise(position * 1.6 + vec3(t * 0.80))         * 0.45;
     n       += snoise(position * 3.0 + vec3(t * 1.20))         * 0.18;
 
-    // mouse pulls the side toward cursor
     float mouseInfluence = dot(normalize(position.xyz), vec3(uMouse, 0.5)) * 0.18;
     n += mouseInfluence;
 
@@ -104,20 +102,16 @@ const fragmentShader = /* glsl */ `
     float ndv = max(0.0, dot(normalize(vNormal), viewDir));
     float fresnel = pow(1.0 - ndv, 2.2);
 
-    // displacement -> base gradient
     float t = clamp(vDisplacement * 0.6 + 0.5, 0.0, 1.0);
     vec3 base = mix(uColorA, uColorB, t);
 
-    // flowing wave across the surface
     float wave = sin(uTime * 0.45 + vWorldPosition.y * 1.4 + vWorldPosition.x * 0.7) * 0.5 + 0.5;
     base = mix(base, uColorC, wave * 0.65);
 
-    // iridescent rim — shifts hue with view angle
     float rimMix = smoothstep(0.0, 1.0, fresnel);
     vec3 rim = mix(uColorD, uColorE, rimMix);
     vec3 finalColor = mix(base, rim, fresnel * 0.85);
 
-    // soft inner glow boost
     finalColor += rim * pow(fresnel, 4.0) * 0.4;
 
     float alpha = 0.88;
@@ -163,11 +157,11 @@ export default function HeroOrb() {
       uDistortion: { value: 0.55 },
       uSpeed: { value: 0.38 },
       uMouse: { value: new THREE.Vector2(0, 0) },
-      uColorA: { value: new THREE.Color("#1e3a8a") }, // deep blue
-      uColorB: { value: new THREE.Color("#7c3aed") }, // violet
-      uColorC: { value: new THREE.Color("#ec4899") }, // pink
-      uColorD: { value: new THREE.Color("#22d3ee") }, // cyan rim
-      uColorE: { value: new THREE.Color("#fbbf24") }, // amber rim accent
+      uColorA: { value: new THREE.Color("#1e3a8a") },
+      uColorB: { value: new THREE.Color("#7c3aed") },
+      uColorC: { value: new THREE.Color("#ec4899") },
+      uColorD: { value: new THREE.Color("#22d3ee") },
+      uColorE: { value: new THREE.Color("#fbbf24") },
     };
 
     const material = new THREE.ShaderMaterial({
@@ -181,7 +175,6 @@ export default function HeroOrb() {
     const orb = new THREE.Mesh(geometry, material);
     scene.add(orb);
 
-    // ---- interactions ----
     const mouseTarget = new THREE.Vector2(0, 0);
 
     const handlePointer = (e: PointerEvent) => {
