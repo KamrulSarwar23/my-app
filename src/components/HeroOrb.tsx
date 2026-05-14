@@ -119,6 +119,48 @@ const fragmentShader = /* glsl */ `
   }
 `;
 
+type OrbPalette = {
+  a: string;
+  b: string;
+  c: string;
+  d: string;
+  e: string;
+};
+
+type PaletteId = "default" | "ocean" | "sunset" | "forest" | "royal";
+type ModeId = "dark" | "light";
+
+const ORB_PALETTES: Record<PaletteId, Record<ModeId, OrbPalette>> = {
+  default: {
+    dark:  { a: "#1e3a8a", b: "#7c3aed", c: "#ec4899", d: "#22d3ee", e: "#fbbf24" },
+    light: { a: "#a5b4fc", b: "#c4b5fd", c: "#f9a8d4", d: "#67e8f9", e: "#fde68a" },
+  },
+  ocean: {
+    dark:  { a: "#0c4a6e", b: "#0891b2", c: "#06b6d4", d: "#67e8f9", e: "#e0f2fe" },
+    light: { a: "#7dd3fc", b: "#67e8f9", c: "#5eead4", d: "#bae6fd", e: "#ffffff" },
+  },
+  sunset: {
+    dark:  { a: "#7f1d1d", b: "#f97316", c: "#ec4899", d: "#fde047", e: "#fb7185" },
+    light: { a: "#fdba74", b: "#fda4af", c: "#f9a8d4", d: "#fde68a", e: "#fef3c7" },
+  },
+  forest: {
+    dark:  { a: "#064e3b", b: "#10b981", c: "#14b8a6", d: "#a7f3d0", e: "#67e8f9" },
+    light: { a: "#86efac", b: "#6ee7b7", c: "#5eead4", d: "#d1fae5", e: "#cffafe" },
+  },
+  royal: {
+    dark:  { a: "#1e1b4b", b: "#4f46e5", c: "#7c3aed", d: "#60a5fa", e: "#e0e7ff" },
+    light: { a: "#a5b4fc", b: "#818cf8", c: "#c4b5fd", d: "#bfdbfe", e: "#fef3c7" },
+  },
+};
+
+function readOrbPalette(): OrbPalette {
+  const root = document.documentElement;
+  const id = (root.getAttribute("data-palette") as PaletteId | null) ?? "default";
+  const mode: ModeId = root.classList.contains("dark") ? "dark" : "light";
+  const set = ORB_PALETTES[id] ?? ORB_PALETTES.default;
+  return set[mode];
+}
+
 export default function HeroOrb() {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -152,17 +194,49 @@ export default function HeroOrb() {
 
     const geometry = new THREE.IcosahedronGeometry(1.5, 64);
 
+    const initialPalette = readOrbPalette();
     const uniforms = {
       uTime: { value: 0 },
       uDistortion: { value: 0.55 },
       uSpeed: { value: 0.38 },
       uMouse: { value: new THREE.Vector2(0, 0) },
-      uColorA: { value: new THREE.Color("#1e3a8a") },
-      uColorB: { value: new THREE.Color("#7c3aed") },
-      uColorC: { value: new THREE.Color("#ec4899") },
-      uColorD: { value: new THREE.Color("#22d3ee") },
-      uColorE: { value: new THREE.Color("#fbbf24") },
+      uColorA: { value: new THREE.Color(initialPalette.a) },
+      uColorB: { value: new THREE.Color(initialPalette.b) },
+      uColorC: { value: new THREE.Color(initialPalette.c) },
+      uColorD: { value: new THREE.Color(initialPalette.d) },
+      uColorE: { value: new THREE.Color(initialPalette.e) },
     };
+
+    const targetColors = {
+      a: new THREE.Color(initialPalette.a),
+      b: new THREE.Color(initialPalette.b),
+      c: new THREE.Color(initialPalette.c),
+      d: new THREE.Color(initialPalette.d),
+      e: new THREE.Color(initialPalette.e),
+    };
+
+    const applyPalette = () => {
+      const p = readOrbPalette();
+      targetColors.a.set(p.a);
+      targetColors.b.set(p.b);
+      targetColors.c.set(p.c);
+      targetColors.d.set(p.d);
+      targetColors.e.set(p.e);
+      if (reducedMotion) {
+        uniforms.uColorA.value.copy(targetColors.a);
+        uniforms.uColorB.value.copy(targetColors.b);
+        uniforms.uColorC.value.copy(targetColors.c);
+        uniforms.uColorD.value.copy(targetColors.d);
+        uniforms.uColorE.value.copy(targetColors.e);
+        renderer.render(scene, camera);
+      }
+    };
+
+    const themeObserver = new MutationObserver(applyPalette);
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class", "data-palette"],
+    });
 
     const material = new THREE.ShaderMaterial({
       vertexShader,
@@ -204,21 +278,29 @@ export default function HeroOrb() {
     visibilityObserver.observe(container);
 
     let frame = 0;
-    const clock = new THREE.Clock();
+    const timer = new THREE.Timer();
+    timer.connect(document);
     const mouseEased = new THREE.Vector2(0, 0);
 
-    const animate = () => {
+    const animate = (timestamp?: number) => {
       if (!visible) {
         frame = requestAnimationFrame(animate);
         return;
       }
 
-      const elapsed = clock.getElapsedTime();
+      timer.update(timestamp);
+      const elapsed = timer.getElapsed();
       uniforms.uTime.value = elapsed;
 
       mouseEased.x += (mouseTarget.x - mouseEased.x) * 0.05;
       mouseEased.y += (mouseTarget.y - mouseEased.y) * 0.05;
       uniforms.uMouse.value.copy(mouseEased);
+
+      uniforms.uColorA.value.lerp(targetColors.a, 0.06);
+      uniforms.uColorB.value.lerp(targetColors.b, 0.06);
+      uniforms.uColorC.value.lerp(targetColors.c, 0.06);
+      uniforms.uColorD.value.lerp(targetColors.d, 0.06);
+      uniforms.uColorE.value.lerp(targetColors.e, 0.06);
 
       if (!reducedMotion) {
         orb.rotation.y = elapsed * 0.12 + mouseEased.x * 0.4;
@@ -240,6 +322,8 @@ export default function HeroOrb() {
       window.removeEventListener("pointermove", handlePointer);
       resizeObserver.disconnect();
       visibilityObserver.disconnect();
+      themeObserver.disconnect();
+      timer.dispose();
       geometry.dispose();
       material.dispose();
       renderer.dispose();
