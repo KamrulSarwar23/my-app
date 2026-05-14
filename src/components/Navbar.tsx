@@ -5,12 +5,14 @@ import { usePathname } from "next/navigation";
 import ThemeToggle from "./ThemeToggle";
 import LanguageSwitcher from "./LanguageSwitcher";
 import ColorPaletteSwitcher from "./ColorPaletteSwitcher";
+import ActionMenu from "./ActionMenu";
 import { useT } from "@/i18n/LanguageProvider";
 
 const sectionIds = [
   "home",
   "about",
   "services",
+  "ai-demo",
   "skills",
   "projects",
   "experience",
@@ -32,6 +34,7 @@ export default function Navbar() {
     { href: sectionHref("home"), match: "#home", label: t.nav.home },
     { href: sectionHref("about"), match: "#about", label: t.nav.about },
     { href: sectionHref("services"), match: "#services", label: t.nav.services },
+    { href: sectionHref("ai-demo"), match: "#ai-demo", label: "AI Demo" },
     { href: sectionHref("skills"), match: "#skills", label: t.nav.skills },
     { href: sectionHref("projects"), match: "#projects", label: t.nav.projects },
     { href: sectionHref("experience"), match: "#experience", label: t.nav.experience },
@@ -92,7 +95,7 @@ export default function Navbar() {
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className={`relative inline-block px-3 py-2 text-sm font-medium transition-colors ${
+                  className={`relative inline-block whitespace-nowrap px-3 py-2 text-sm font-medium transition-colors ${
                     isActive
                       ? "text-foreground"
                       : "text-muted hover:text-foreground"
@@ -112,34 +115,7 @@ export default function Navbar() {
           <LanguageSwitcher />
           <ColorPaletteSwitcher />
           <ThemeToggle />
-          <a
-            href="/Kamrul_Hasan_Resume.pdf"
-            download
-            className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium hover:bg-foreground/5 transition"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-              <polyline points="7 10 12 15 17 10" />
-              <line x1="12" y1="15" x2="12" y2="3" />
-            </svg>
-            {t.nav.cv}
-          </a>
-          <a
-            href="mailto:kamrulsarwar99@gmail.com"
-            className="inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background hover:opacity-90 transition"
-          >
-            {t.nav.hireMe}
-          </a>
+          <ActionMenu />
         </div>
 
         <div className="flex lg:hidden items-center gap-2">
@@ -202,23 +178,7 @@ export default function Navbar() {
               );
             })}
             <li className="pt-2">
-              <a
-                href="/Kamrul_Hasan_Resume.pdf"
-                download
-                onClick={() => setOpen(false)}
-                className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium"
-              >
-                {t.nav.downloadCv}
-              </a>
-            </li>
-            <li>
-              <a
-                href="mailto:kamrulsarwar99@gmail.com"
-                onClick={() => setOpen(false)}
-                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background"
-              >
-                {t.nav.hireMe}
-              </a>
+              <ActionMenu variant="mobile" onAction={() => setOpen(false)} />
             </li>
           </ul>
         </div>
