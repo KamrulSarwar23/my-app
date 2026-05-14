@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import { useT } from "@/i18n/LanguageProvider";
 import AnimatedCounter from "./AnimatedCounter";
 
-const HeroParticles = dynamic(() => import("./HeroParticles"), {
+const HeroOrb = dynamic(() => import("./HeroOrb"), {
   ssr: false,
 });
 
@@ -19,10 +19,9 @@ export default function Hero() {
     >
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute inset-0 bg-grid opacity-50" />
-        <HeroParticles />
-        <div className="absolute top-20 -left-20 w-72 h-72 bg-blue-500/30 dark:bg-blue-500/15 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl animate-blob" />
-        <div className="absolute top-40 -right-20 w-72 h-72 bg-purple-500/30 dark:bg-purple-500/15 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl animate-blob delay-2000" />
-        <div className="absolute -bottom-10 left-40 w-72 h-72 bg-pink-500/30 dark:bg-pink-500/15 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl animate-blob delay-4000" />
+        <div className="absolute top-20 -left-20 w-72 h-72 bg-blue-500/20 dark:bg-blue-500/10 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl animate-blob" />
+        <div className="absolute -bottom-10 left-40 w-72 h-72 bg-pink-500/20 dark:bg-pink-500/10 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl animate-blob delay-4000" />
+        <HeroOrb />
       </div>
 
       <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 grid md:grid-cols-[1.3fr_1fr] gap-10 md:gap-12 items-center">
