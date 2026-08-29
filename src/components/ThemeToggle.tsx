@@ -12,14 +12,24 @@ export default function ThemeToggle() {
 
   useEffect(() => {
     setMounted(true);
-    const isDark = document.documentElement.classList.contains("dark");
-    setTheme(isDark ? "dark" : "light");
+    const sync = () =>
+      setTheme(
+        document.documentElement.classList.contains("dark") ? "dark" : "light"
+      );
+    sync();
+    const observer = new MutationObserver(sync);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+    return () => observer.disconnect();
   }, []);
 
   const toggle = () => {
-    const next: Theme = theme === "dark" ? "light" : "dark";
-    setTheme(next);
     const root = document.documentElement;
+    const isDark = root.classList.contains("dark");
+    const next: Theme = isDark ? "light" : "dark";
+    setTheme(next);
     if (next === "dark") root.classList.add("dark");
     else root.classList.remove("dark");
     root.style.colorScheme = next;
